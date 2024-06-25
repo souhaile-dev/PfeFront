@@ -1,0 +1,49 @@
+/* src/routes/components/Lo/Register.css */
+
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .register-form {
+    background: #2C2C2C;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .register-form h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+  }
+  
+  .register-form input, .register-form select {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    background: #3C3C3C;
+    color: white;
+  }
+  
+  .register-form button {
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    background: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .register-form button:hover {
+    background: #45A049;
+  }
+  
