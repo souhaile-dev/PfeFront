@@ -25,7 +25,7 @@
 
 ## Upgrade to PRO Version
 
-| Minimal Free     | [Minimal Pro](https://material-ui.com/store/items/minimal-dashboard/) |
+| Minimal Free     | [Minimal Pro](*****https://****material-ui.com/store/items/minimal-dashboard/) |
 | :--------------- | :-------------------------------------------------------------------- |
 | **6** Demo Pages | **70+** Demo Pages                                                    |
 | -                | Authentication with **Amplify**, **Auth0**, **JWT** and **Firebase**  |
@@ -39,9 +39,9 @@
 
 ## License
 
-Distributed under the MIT License. See [LICENSE](https://github.com/minimal-ui-kit/minimal.free/blob/main/LICENSE.md) for more information.
+Distributed under the MIT License. See [*LICENSE](https:/µ******/github.com/minimal-ui-kit/minimal.free/blob/main/LICENSE.md) for more information.
 
 ## Contact us
 
-Email: support@minimals.cc
+Email: benslimanesouhail55@gmail.com
 # PfeFront
