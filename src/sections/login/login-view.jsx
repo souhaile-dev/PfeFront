@@ -1,3 +1,4 @@
+// src/routes/components/Lo/LoginView.jsx
 import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -19,10 +20,13 @@ import { doc, getDoc } from 'firebase/firestore';
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
 import { bgGradient } from 'src/theme/css';
+import { useAuth } from '../../routes/components/Lo/AuthContext';
+
 
 export default function LoginView() {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { setUserData } = useAuth(); // Use setUserData from context
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -43,6 +47,7 @@ export default function LoginView() {
       const userDoc = await getDoc(doc(db, 'users', user.uid));
       if (userDoc.exists()) {
         const role = userDoc.data().role;
+        setUserData({ user, role }); // Set user data in context
         if (role === 'admin') {
           navigate('/dashboard'); // Admin sees the IndexPage
         } else if (role === 'driver') {

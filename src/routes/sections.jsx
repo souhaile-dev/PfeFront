@@ -1,7 +1,7 @@
 // src/routes/Router.js
 import { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
-import RealTimeLocation from 'src/sections/blog/view/RealTimeLocation';
+import RealTimeLocation from '../sections/blog/view/RealTimeLocation';
 import EmployeeManagement from '../sections/blog/view/EmployeeManagement ';
 import VehicleManagement from '../sections/blog/view/Vehicule/VehicleManagement';
 import DashboardLayout from 'src/layouts/dashboard';
@@ -16,6 +16,7 @@ export const IndexPage = lazy(() => import('src/pages/app'));
 export const UserPage = lazy(() => import('src/pages/user'));
 export const ProductsPage = lazy(() => import('src/pages/products'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
+
 
 export default function Router() {
   const routes = useRoutes([
@@ -54,27 +55,15 @@ export default function Router() {
         },
         {
           path: 'Mp',
-          element: (
-            <ProtectedRoute role={["admin", "driver"]}>
-              <RealTimeLocation />
-            </ProtectedRoute>
-          ),
+          element: <RealTimeLocation />,
         },
         {
           path: 'employee-management',
-          element: (
-            <ProtectedRoute role="employee">
-              <EmployeeManagement />
-            </ProtectedRoute>
-          ),
+          element: <EmployeeManagement />,
         },
         {
           path: 'vehicle-management',
-          element: (
-            <ProtectedRoute role="driver">
-              <VehicleManagement />
-            </ProtectedRoute>
-          ),
+          element: <VehicleManagement />,
         },
         { path: 'register', element: <UserRegistration /> },
         { path: 'loginn', element: <UserRegistration /> },
@@ -97,3 +86,17 @@ export default function Router() {
 
   return routes;
 }
+// Main entry point
+// import React from 'react';
+// import ReactDOM from 'react-dom';
+// import App from '../app';
+// import { AuthProvider } from './components/Lo/AuthContext';
+
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <AuthProvider>
+//       <App />
+//     </AuthProvider>
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// );

@@ -14,6 +14,16 @@ import { useAuth } from '../../../routes/components/Lo/AuthContext';
 
 const BlogView = () => {
   const { blogPosts } = useBlogPosts();
+  const { role } = useAuth();
+
+  let filteredPosts = [];
+  if (role === 'admin') {
+    filteredPosts = blogPosts; // Admin sees all posts
+  } else if (role === 'driver') {
+    filteredPosts = blogPosts.filter(post => post.title === 'Tracking' || post.title === 'View the stock');
+  } else if (role === 'employee') {
+    filteredPosts = blogPosts.filter(post => post.title === 'Ressource humain' || post.title === 'Depences');
+  }
 
   return (
     <Container>
@@ -25,7 +35,7 @@ const BlogView = () => {
       </Stack>
 
       <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
-        <PostSearch posts={blogPosts} />
+        <PostSearch posts={filteredPosts} />
         <PostSort
           options={[
             { value: 'latest', label: 'Latest' },
@@ -36,7 +46,7 @@ const BlogView = () => {
       </Stack>
 
       <Grid container spacing={3}>
-        {blogPosts.map((post, index) => (
+        {filteredPosts.map((post, index) => (
           <PostCard key={post.id} post={post} index={index} />
         ))}
       </Grid>

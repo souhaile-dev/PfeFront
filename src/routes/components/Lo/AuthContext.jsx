@@ -1,40 +1,46 @@
-// src/contexts/AuthContext.jsx
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { auth, db } from './FirebaseConfig';
+// src/routes/components/Lo/AuthContext.js
+import { createContext, useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
+import { auth, db } from './FirebaseConfig';
 import { doc, getDoc } from 'firebase/firestore';
 
 const AuthContext = createContext();
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [role, setRole] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setCurrentUser(user);
       if (user) {
         const userDoc = await getDoc(doc(db, 'users', user.uid));
         if (userDoc.exists()) {
+          setCurrentUser(user);
           setRole(userDoc.data().role);
         }
       } else {
+        setCurrentUser(null);
         setRole(null);
       }
-      setLoading(false);
     });
 
     return unsubscribe;
   }, []);
 
+  const setUserData = (userData) => {
+    setCurrentUser(userData.user);
+    setRole(userData.role);
+  };
+
   const value = {
     currentUser,
     role,
-    loading,
+    setUserData,
   };
 
-  return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
