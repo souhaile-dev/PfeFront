@@ -1,65 +1,13 @@
 import React from 'react';
 
 const VehicleList = ({ vehicles, onEditClick, onDeleteClick, onMaintenanceClick }) => {
-  const containerStyles = {
-    maxWidth: '1120px',
-    margin: 'auto',
-    padding: '24px',
-    backgroundColor: '#fff',
-    borderRadius: '8px',
-    boxShadow: '0 5px 15px rgba(0, 0, 0, 0.1)',
-  };
-
-  const gridStyles = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-    gap: '16px',
-  };
-
-  const cardStyles = {
-    padding: '16px',
-    backgroundColor: '#F3F4F6',
-    borderRadius: '8px',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-    transition: 'background-color 0.3s',
-  };
-
-  const buttonStyles = {
-    edit: {
-      backgroundColor: '#4F46E5',
-      color: '#fff',
-      padding: '5px 10px',
-      border: 'none',
-      borderRadius: '4px',
-      cursor: 'pointer',
-      marginRight: '5px',
-    },
-    delete: {
-      backgroundColor: '#E11D48',
-      color: '#fff',
-      padding: '5px 10px',
-      border: 'none',
-      borderRadius: '4px',
-      cursor: 'pointer',
-    },
-    maintenance: {
-      backgroundColor: '#10B981',
-      color: '#fff',
-      padding: '5px 10px',
-      border: 'none',
-      borderRadius: '4px',
-      cursor: 'pointer',
-      marginTop: '5px',
-    },
-  };
-
   return (
-    <div style={containerStyles}>
-      <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px' }}>Vehicles</h2>
-      <div style={gridStyles}>
+    <div className="max-w-5xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <h2 className="text-2xl font-bold mb-4">Vehicles</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {vehicles.map((vehicle) => (
-          <div key={vehicle.id} style={cardStyles}>
-            <h3 style={{ fontSize: '18px', fontWeight: 'bold' }}>{vehicle.name}</h3>
+          <div key={vehicle.id} className="p-4 bg-gray-100 rounded-lg shadow-md hover:bg-gray-200 transition">
+            <h3 className="text-lg font-bold">{vehicle.name}</h3>
             <p>Type: {vehicle.type}</p>
             <p>Registration Number: {vehicle.registrationNumber}</p>
             <p>Reservoid: {vehicle.reervoid}</p>
@@ -68,15 +16,17 @@ const VehicleList = ({ vehicles, onEditClick, onDeleteClick, onMaintenanceClick 
             <p>Buying Mileage: {vehicle.buyingMileage}</p>
             <p>Current Mileage: {vehicle.currentMileage}</p>
             <p>Buying Price: {vehicle.buyingPrice}</p>
-            <button style={buttonStyles.edit} onClick={() => onEditClick(vehicle)}>Edit</button>
-            <button style={buttonStyles.delete} onClick={() => onDeleteClick(vehicle.id)}>Delete</button>
-            <button style={buttonStyles.maintenance} onClick={() => onMaintenanceClick(vehicle.id)}>Add Maintenance</button>
+            <div className="flex space-x-2 mt-2">
+              <button className="bg-indigo-600 text-white py-1 px-2 rounded hover:bg-indigo-700 transition" onClick={() => onEditClick(vehicle)}>Edit</button>
+              <button className="bg-red-600 text-white py-1 px-2 rounded hover:bg-red-700 transition" onClick={() => onDeleteClick(vehicle.id)}>Delete</button>
+              <button className="bg-green-600 text-white py-1 px-2 rounded hover:bg-green-700 transition mt-2" onClick={() => onMaintenanceClick(vehicle.id)}>Add Maintenance</button>
+            </div>
             {vehicle.maintenance && vehicle.maintenance.length > 0 && (
-              <div style={{ marginTop: '10px' }}>
-                <h4 style={{ fontSize: '16px', fontWeight: 'bold' }}>Maintenance Records</h4>
-                <ul>
+              <div className="mt-4">
+                <h4 className="text-lg font-bold">Maintenance Records</h4>
+                <ul className="list-disc list-inside">
                   {vehicle.maintenance.map((m, index) => (
-                    <li key={index} style={{ color: '#374151' }}>
+                    <li key={index} className="text-gray-700">
                       <p>Problem: {m.problem}</p>
                       <p>Spends: {m.spends}</p>
                       <p>Details: {m.details}</p>

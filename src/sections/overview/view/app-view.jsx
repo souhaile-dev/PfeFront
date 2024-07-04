@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-
+import React, { useState, useEffect } from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
@@ -15,79 +15,89 @@ import AppWidgetSummary from '../app-widget-summary';
 import AppTrafficBySite from '../app-traffic-by-site';
 import AppCurrentSubject from '../app-current-subject';
 import AppConversionRates from '../app-conversion-rates';
-
-// ----------------------------------------------------------------------
+import StockForm from 'src/sections/blog/view/Stock/StockForm'; // Import the StockForm component
+import { db } from 'src/routes/components/Lo/FirebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
 
 export default function AppView() {
+  const [stockData, setStockData] = useState({
+    labels: [],
+    selled: [],
+    buyed: [],
+    currentStock: [],
+  });
+
+  const fetchStockData = async () => {
+    const querySnapshot = await getDocs(collection(db, 'stocks'));
+    const data = {
+      labels: [],
+      selled: [],
+      buyed: [],
+      currentStock: [],
+    };
+
+    querySnapshot.forEach((doc) => {
+      const stock = doc.data();
+      data.labels.push(stock.date);
+      data.selled.push(parseInt(stock.selled));
+      data.buyed.push(parseInt(stock.buyed));
+      data.currentStock.push(parseInt(stock.currentStock));
+    });
+
+    setStockData(data);
+  };
+
+  useEffect(() => {
+    fetchStockData();
+  }, []);
+
+  const addStockData = (newData) => {
+    setStockData((prev) => ({
+      labels: [...prev.labels, newData.date],
+      selled: [...prev.selled, parseInt(newData.selled)],
+      buyed: [...prev.buyed, parseInt(newData.buyed)],
+      currentStock: [...prev.currentStock, parseInt(newData.currentStock)],
+    }));
+  };
+
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 5 }}>
-        Hi, Mr Hmza 👋
+        Hi, Mr Souhaile 👋
       </Typography>
-{/* 
       <Grid container spacing={3}>
-        <Grid xs={12} sm={6} md={3}>
-          <AppWidgetSummary
-            title=" Payroll"
-            total={138,154,236.000}
-            color="success"
-            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_bag.png" />}
-          />
+        {/* <Grid xs={12} md={6} lg={8}>
+          <StockForm onAddStock={addStockData} />
         </Grid> */}
-        <Grid container spacing={3}>
-  
-{/* 
-        <Grid xs={12} sm={6} md={3}>
-          <AppWidgetSummary
-            title="Bug Reports"
-            total={234}
-            color="error"
-            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_message.png" />}
-          />
-        </Grid> */}
-
         <Grid xs={12} md={6} lg={8}>
           <AppWebsiteVisits
-            title="Website Visits"
+            title="Productivity"
             subheader="(+43%) than last year"
             chart={{
-              labels: [
-                '01/01/2003',
-                '02/01/2003',
-                '03/01/2003',
-                '04/01/2003',
-                '05/01/2003',
-                '06/01/2003',
-                '07/01/2003',
-                '08/01/2003',
-                '09/01/2003',
-                '10/01/2003',
-                '11/01/2003',
-              ],
+              labels: stockData.labels,
               series: [
                 {
-                  name: 'Hired',
+                  name: 'selled',
                   type: 'column',
                   fill: 'solid',
-                  data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
+                  data: stockData.selled,
                 },
                 {
-                  name: 'Left',
+                  name: 'buyed',
                   type: 'area',
                   fill: 'gradient',
-                  data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
+                  data: stockData.buyed,
                 },
                 {
-                  name: 'current',
+                  name: 'current stock',
                   type: 'line',
                   fill: 'solid',
-                  data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 80],
+                  data: stockData.currentStock,
                 },
               ],
             }}
           />
         </Grid>
-
         <Grid xs={12} md={6} lg={4}>
           <AppCurrentVisits
             title="Current employés"
@@ -95,22 +105,18 @@ export default function AppView() {
               series: [
                 { label: 'Women', value: 4344 },
                 { label: 'Men', value: 5435 },
-               
               ],
             }}
           />
         </Grid>
         <Grid xs={12} sm={6} md={3}>
-    <AppWidgetSummary
-      title="Payroll"
-      total={138154236.000} // Removed commas from the total value
-      color="success"
-      icon={<img alt="icon" src="/assets/icons/glass/ic_glass_bag.png" />}
-    />
-  </Grid>
-
-
-
+          <AppWidgetSummary
+            title="Payroll"
+            total={138154236.000} // Removed commas from the total value
+            color="success"
+            icon={<img alt="icon" src="/assets/icons/glass/ic_glass_bag.png" />}
+          />
+        </Grid>
         <Grid xs={12} sm={6} md={3} >
           <AppWidgetSummary
             title="Average salary"
@@ -119,7 +125,6 @@ export default function AppView() {
             icon={<img alt="icon" src="/assets/icons/glass/ic_glass_users.png" />}
           />
         </Grid>
-
         <Grid xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title="Average age"
@@ -141,15 +146,10 @@ export default function AppView() {
                 { label: 'achivement', value: 470 },
                 { label: 'Non distribuer', value: 540 },
                 { label: 'declined', value: 580 },
-                // { label: 'South Korea', value: 690 },
-                // { label: 'Netherlands', value: 1100 },
-                // { label: 'United States', value: 1200 },
-                // { label: 'United Kingdom', value: 1380 },
               ],
             }}
           />
         </Grid>
-
         <Grid xs={12} md={6} lg={4}>
           <AppCurrentSubject
             title="Current Object"
@@ -163,7 +163,6 @@ export default function AppView() {
             }}
           />
         </Grid>
-
         <Grid xs={12} md={6} lg={8}>
           <AppNewsUpdate
             title="News Update"
@@ -176,7 +175,6 @@ export default function AppView() {
             }))}
           />
         </Grid>
-
         <Grid xs={12} md={6} lg={4}>
           <AppOrderTimeline
             title="Order Timeline"
@@ -194,7 +192,6 @@ export default function AppView() {
             }))}
           />
         </Grid>
-
         <Grid xs={12} md={6} lg={4}>
           <AppTrafficBySite
             title="Traffic by departement"
@@ -222,7 +219,6 @@ export default function AppView() {
             ]}
           />
         </Grid>
-
         <Grid xs={12} md={6} lg={8}>
           <AppTasks
             title="Tasks"

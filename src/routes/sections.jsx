@@ -11,12 +11,13 @@ import Register from '../routes/components/Lo/Register';
 import { AuthProvider } from '../routes/components/Lo/AuthContext';
 import ProtectedRoute from '../routes/components/Lo/ProtectedRoute';
 import BlogView from '../sections/blog/view/blog-view';
+import AppView from 'src/pages/app';
+import StockForm from '../sections/blog/view/Stock/StockForm';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const UserPage = lazy(() => import('src/pages/user'));
 export const ProductsPage = lazy(() => import('src/pages/products'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
-
 
 export default function Router() {
   const routes = useRoutes([
@@ -33,6 +34,14 @@ export default function Router() {
       children: [
         { path: '/', element: <Navigate to="/login" replace /> }, // Redirect to login initially
         { path: 'dashboard', element: <IndexPage /> }, // Dashboard as the default page after login
+        {
+          path: 'dasboard',
+          element: (
+            <ProtectedRoute role="admin">
+              <AppView />
+            </ProtectedRoute>
+          ),
+        },
         {
           path: 'user',
           element: (
@@ -64,6 +73,9 @@ export default function Router() {
         {
           path: 'vehicle-management',
           element: <VehicleManagement />,
+        },{
+          path: 'stock',
+          element: <StockForm />,
         },
         { path: 'register', element: <UserRegistration /> },
         { path: 'loginn', element: <UserRegistration /> },
@@ -86,17 +98,3 @@ export default function Router() {
 
   return routes;
 }
-// Main entry point
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import App from '../app';
-// import { AuthProvider } from './components/Lo/AuthContext';
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <AuthProvider>
-//       <App />
-//     </AuthProvider>
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// );

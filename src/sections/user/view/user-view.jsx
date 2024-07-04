@@ -101,22 +101,18 @@ export default function UserPage() {
   };
 
   const handleAddUser = (newUser) => {
-    // Create a new user object
     const { firstName, lastName, role } = newUser;
     const name = `${firstName} ${lastName}`;
     const newUserObject = {
-      id: users.length + 1, // Assuming each user has a unique ID
+      id: users.length + 1,
       name,
       company: 'MSBS',
       role,
       isVerified: true,
       status: 'active',
-      // Add other properties as needed
     };
   
-    // Add the new user to the user list
     setUsers([...users, newUserObject]);
-    
     handleClose(); // Close the modal after adding user
   };
 
@@ -125,8 +121,7 @@ export default function UserPage() {
       <Typography id="modal-modal-title" variant="h6" component="h2">
         Add New User
       </Typography>
-      {/* Add your form or input fields for adding a new user */}
-      <UserRegistration onAddUser={handleAddUser}/>
+      <UserRegistration onAddUser={handleAddUser} />
       <Button onClick={handleClose}>Close</Button>
     </Box>
   );

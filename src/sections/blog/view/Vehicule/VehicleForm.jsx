@@ -73,20 +73,21 @@ const VehicleForm = ({ isOpen, onClose, onSubmit, vehicle }) => {
       right: 'auto',
       bottom: 'auto',
       marginRight: '-50%',
+      marginTop:'3%',
       transform: 'translate(-50%, -50%)',
       padding: '20px',
       borderRadius: '8px',
       boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
-      maxHeight: '90vh',
-      overflowY: 'auto',
       width: '90%',
-      maxWidth: '600px',
+      maxWidth: '500px',
+      maxHeight: '80vh',  // Ensures the modal does not exceed 80% of the viewport height
+      overflowY: 'auto',
+      backgroundColor:'gold'  // Adds vertical scrolling
     },
     overlay: {
       backgroundColor: 'rgba(0, 0, 0, 0.75)',
     },
   };
-
   return (
     <Modal
       isOpen={isOpen}
@@ -95,26 +96,19 @@ const VehicleForm = ({ isOpen, onClose, onSubmit, vehicle }) => {
       contentLabel="Vehicle Form"
     >
       <div>
-        <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '20px' }}>
+        <h2 className="text-2xl font-bold mb-5 text-center">
           {vehicle ? 'Edit Vehicle' : 'Add Vehicle'}
         </h2>
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <form onSubmit={handleSubmit} className="flex flex-col space-y-4 p-4">
           {['name', 'type', 'registrationNumber', 'reervoid', 'consomation', 'buyingState', 'buyingMileage', 'currentMileage', 'buyingPrice', 'distance', 'fuelPrice', 'tripRevenue'].map((field) => (
-            <div key={field} style={{ display: 'flex', flexDirection: 'column', marginBottom: '8px' }}>
-              <label style={{ marginBottom: '8px', fontWeight: '500' }}>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
+            <div key={field} className="flex flex-col mb-4">
+              <label className="mb-2 font-medium text-gray-700">{field.charAt(0).toUpperCase() + field.slice(1)}</label>
               <input
                 type="text"
                 name={field}
                 value={formData[field]}
                 onChange={handleChange}
-                style={{
-                  width: '100%',
-                  padding: '8px',
-                  margin: '8px 0',
-                  borderRadius: '4px',
-                  border: '1px solid #ccc',
-                  boxSizing: 'border-box',
-                }}
+                className="w-full p-2 border border-gray-300 rounded"
                 required
               />
             </div>
@@ -125,29 +119,14 @@ const VehicleForm = ({ isOpen, onClose, onSubmit, vehicle }) => {
           </div>
           <button
             type="submit"
-            style={{
-              backgroundColor: '#4F46E5',
-              color: '#fff',
-              padding: '10px 20px',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-            }}
+            className="bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 transition"
           >
             {vehicle ? 'Update Vehicle' : 'Add Vehicle'}
           </button>
         </form>
         <button
           onClick={onClose}
-          style={{
-            backgroundColor: '#6B7280',
-            color: '#fff',
-            padding: '10px 20px',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            marginTop: '10px',
-          }}
+          className="mt-4 bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600 transition"
         >
           Close
         </button>

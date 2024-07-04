@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 
 // Import the local images
-import firstPostImage from '../../public/assets/background/overlay_2.jpg';
-import secondPostImage from '../../public/assets/background/overlay_3.jpg';
-import thirdPostImage from '../../public/assets/background/overlay_4.jpg';
+import firstPostImage from '../../public/assets/background/traking.jpeg';
+import secondPostImage from '../../public/assets/background/rh.jpeg';
+import thirdPostImage from '../../public/assets/background/stock.jpeg';
+import foordPostImage from '../../public/assets/background/vehicule.jpeg';
 
 export const useBlogPosts = () => {
   const [blogPosts, setBlogPosts] = useState([
@@ -24,18 +25,25 @@ export const useBlogPosts = () => {
     },
     {
       id: 3,
-      title: 'View the stock',
+      title: 'Add Vehicule',
       content: 'This is the third blog post content.',
-      img: thirdPostImage,
+      img: foordPostImage,
       route: '/vehicle-management', // Route for VehicleManagement
     },
     {
       id: 4,
       title: 'Depences',
       content: 'This is the fourth blog post content.',
-      img: firstPostImage,
-      route: '/expenses-management', // Example route for another component
+      img: thirdPostImage,
+      route: '/depences', // Example route for another component
+    },{
+      id: 4,
+      title: 'stock',
+      content: 'This is the fourth blog post content.',
+      img: thirdPostImage,
+      route: '/stock', // Example route for another component
     },
+    
   ]);
 
   return { blogPosts, setBlogPosts };

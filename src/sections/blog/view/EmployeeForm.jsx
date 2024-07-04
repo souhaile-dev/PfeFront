@@ -43,58 +43,42 @@ const EmployeeForm = ({ isOpen, onClose, onAddEmployee }) => {
       right: 'auto',
       bottom: 'auto',
       marginRight: '-50%',
+      marginTop:'3%',
       transform: 'translate(-50%, -50%)',
       padding: '20px',
       borderRadius: '8px',
       boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
+      width: '90%',
+      maxWidth: '500px',
+      maxHeight: '80vh',  // Ensures the modal does not exceed 80% of the viewport height
+      overflowY: 'auto',
+      backgroundColor:'#C0C0C0'  // Adds vertical scrolling
     },
     overlay: {
       backgroundColor: 'rgba(0, 0, 0, 0.75)',
     },
   };
 
-  const inputStyles = {
-    width: '100%',
-    padding: '8px',
-    margin: '8px 0',
-    borderRadius: '4px',
-    border: '1px solid #ccc',
-    boxSizing: 'border-box',
-  };
-
-  const buttonStyles = {
-    primary: {
-      backgroundColor: '#4F46E5',
-      color: '#fff',
-      padding: '10px 20px',
-      border: 'none',
-      borderRadius: '4px',
-      cursor: 'pointer',
-    },
-    secondary: {
-      backgroundColor: '#6B7280',
-      color: '#fff',
-      padding: '10px 20px',
-      border: 'none',
-      borderRadius: '4px',
-      cursor: 'pointer',
-      marginTop: '10px',
-    },
-  };
-
   return (
-    <Modal isOpen={isOpen} onRequestClose={onClose} style={modalStyles} contentLabel="Add Employee">
-      <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '20px' }}>Add Employee</h2>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+    <Modal  isOpen={isOpen} onRequestClose={onClose} style={modalStyles} contentLabel="Add Employee">
+      <h2 className="text-2xl font-bold mb-5 text-center">Add Employee</h2>
+      <form onSubmit={handleSubmit} className="flex flex-col space-y-4 p-4">
         {['firstName', 'lastName', 'userName', 'email', 'password', 'cin', 'cnss', 'birthDate', 'role'].map((field) => (
-          <div key={field} style={{ display: 'flex', gap: '8px' }}>
-            <label style={{ marginBottom: '8px', fontWeight: '500' }}>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
-            <input type={field === 'password' ? 'password' : field === 'email' ? 'email' : 'text'} name={field} value={employee[field]} onChange={handleChange} style={inputStyles} required />
+          <div key={field} className="flex flex-col mb-4">
+            <label className="mb-1 font-medium text-gray-100">{field.charAt(0).toUpperCase() + field.slice(1)}</label>
+            <input
+              type={field === 'password' ? 'password' : field === 'email' ? 'email' : 'text'}
+              name={field}
+              value={employee[field]}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded"
+              required
+            />
           </div>
         ))}
-        <button type="submit" style={buttonStyles.primary}>Add Employee</button>
+        <button type="submit" className="bg-indigo-400 text-white py-2 px-4 rounded hover:bg-indigo-700 transition">Add Employee</button>
       </form>
-      <button onClick={onClose} style={buttonStyles.secondary}>Close</button>
+      <button onClick={onClose} className="mt-4 bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600 transition">Close</button>
     </Modal>
   );
 };
