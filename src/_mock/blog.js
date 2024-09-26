@@ -37,11 +37,17 @@ export const useBlogPosts = () => {
       img: thirdPostImage,
       route: '/depences', // Example route for another component
     },{
-      id: 4,
+      id: 5,
       title: 'stock',
       content: 'This is the fourth blog post content.',
       img: thirdPostImage,
       route: '/stock', // Example route for another component
+    },{
+      id: 6,
+      title: 'Maintenance vehicule',
+      content: 'This is the commandes for the logisticien',
+      img: thirdPostImage,
+      route: '/Maintenance', // Example route for another component
     },
     
   ]);

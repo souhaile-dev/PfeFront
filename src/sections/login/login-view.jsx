@@ -1,4 +1,5 @@
 // src/routes/components/Lo/LoginView.jsx
+
 import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -13,15 +14,12 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { alpha, useTheme } from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useNavigate } from 'react-router-dom';
-import { auth, db } from '../../routes/components/Lo/FirebaseConfig';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
-
+import axios from 'axios';
+import {jwtDecode} from 'jwt-decode';
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
 import { bgGradient } from 'src/theme/css';
 import { useAuth } from '../../routes/components/Lo/AuthContext';
-
 
 export default function LoginView() {
   const theme = useTheme();
@@ -31,6 +29,8 @@ export default function LoginView() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  
+
 
   const handleClick2 = () => {
     navigate('/reg');
@@ -40,23 +40,47 @@ export default function LoginView() {
     e.preventDefault();
     setLoading(true);
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      // Get user role from Firestore
-      const userDoc = await getDoc(doc(db, 'users', user.uid));
-      if (userDoc.exists()) {
-        const role = userDoc.data().role;
-        setUserData({ user, role }); // Set user data in context
-        if (role === 'admin') {
-          navigate('/dashboard'); // Admin sees the IndexPage
-        } else if (role === 'driver') {
-          navigate('/blog'); // Driver sees only Tracking and View Stock
-        } else if (role === 'employee') {
-          navigate('/employee-management'); // Employee sees Ressource Humain and Depences
-        }
-      } else {
-        console.error('No such document!');
+      const response = await axios.post('https://tv5ug57ehvur5swsrfcnj5ohpe0iqqbu.lambda-url.us-east-1.on.aws/api/signin', { email, password });
+  
+      // Log the entire response object
+      console.log('Login response object:', response);
+  
+      // Log the data from the response
+      console.log('Response data:', response.data);
+  
+      // Extract the token from the response data
+      const { token } = response.data;
+  
+      // Log the extracted token
+      console.log('Token:', token);
+  
+      // Decode the JWT token
+      const decodedToken = jwtDecode(token);
+      console.log('Decoded Token:', decodedToken);
+  
+      // Extract role from the decoded token
+      const role = decodedToken.role;
+      console.log('Role from token:', role);
+  
+      // Store the token and set user data
+      localStorage.setItem('token', token);
+      setUserData({ email, role, token });
+  
+      // Navigate based on the role
+      switch (role) {
+        case 'ADMIN':
+          navigate('/dashboard');
+          break;
+        case 'DRIVER':
+          navigate('/blog');
+          break;
+        case 'EMPLOYEE':
+          navigate('/employee-management');
+          break;
+        default:
+          console.log('Unknown role:', role);
+          navigate('/404');
+          break;
       }
     } catch (error) {
       console.error('Error logging in:', error.message);
@@ -64,7 +88,7 @@ export default function LoginView() {
       setLoading(false);
     }
   };
-
+  
   return (
     <Box
       sx={{
@@ -167,21 +191,8 @@ export default function LoginView() {
               />
             </Stack>
 
-            <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ my: 3 }}>
-              <Link variant="subtitle2" underline="hover">
-                Forgot password?
-              </Link>
-            </Stack>
-
-            <LoadingButton
-              fullWidth
-              size="large"
-              type="submit"
-              variant="contained"
-              color="inherit"
-              loading={loading}
-            >
-              Login
+            <LoadingButton fullWidth size="large" type="submit" variant="contained" sx={{ mt: 5 }} loading={loading}>
+              Sign in
             </LoadingButton>
           </form>
         </Card>

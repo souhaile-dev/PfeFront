@@ -1,7 +1,8 @@
 import { faker } from '@faker-js/faker';
 import React, { useState, useEffect } from 'react';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid';
+
 import Typography from '@mui/material/Typography';
 
 import Iconify from 'src/components/iconify';

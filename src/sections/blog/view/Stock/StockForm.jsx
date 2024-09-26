@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from 'src/routes/components/Lo/FirebaseConfig';
+import { db } from 'src/routes/components/Lo/FirebaseConfig'; // Adjust the import path as needed
 
 const StockForm = ({ onAddStock }) => {
   const [formData, setFormData] = useState({
@@ -18,6 +18,7 @@ const StockForm = ({ onAddStock }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       await addDoc(collection(db, 'stocks'), formData);
       if (typeof onAddStock === 'function') {
@@ -31,6 +32,7 @@ const StockForm = ({ onAddStock }) => {
       });
     } catch (e) {
       console.error("Error adding document: ", e);
+      alert("Error adding document: " + e.message);
     }
   };
 

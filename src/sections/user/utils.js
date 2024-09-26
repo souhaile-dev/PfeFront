@@ -47,10 +47,17 @@ export function applyFilter({ inputData, comparator, filterName }) {
   inputData = stabilizedThis.map((el) => el[0]);
 
   if (filterName) {
+    const lowercasedFilter = filterName.toLowerCase();
+
+    // Filter by name or CIN (Case-insensitive)
     inputData = inputData.filter(
-      (user) => user.name.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+      (user) =>
+        (user.firstName && user.firstName.toLowerCase().includes(lowercasedFilter)) ||
+        (user.lastName && user.lastName.toLowerCase().includes(lowercasedFilter)) ||
+        (user.cin && user.cin.toLowerCase().includes(lowercasedFilter))
     );
   }
 
   return inputData;
 }
+

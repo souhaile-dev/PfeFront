@@ -4,6 +4,7 @@ import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 import RealTimeLocation from '../sections/blog/view/RealTimeLocation';
 import EmployeeManagement from '../sections/blog/view/EmployeeManagement ';
 import VehicleManagement from '../sections/blog/view/Vehicule/VehicleManagement';
+import Maintenance from '../sections/blog/view/maintenance/Maintenance';
 import DashboardLayout from 'src/layouts/dashboard';
 import UserRegistration from './components/componenetsview/UserRegistration';
 import LoginView from '../sections/login/login-view';
@@ -32,20 +33,19 @@ export default function Router() {
         </AuthProvider>
       ),
       children: [
-        { path: '/', element: <Navigate to="/login" replace /> }, // Redirect to login initially
-        { path: 'dashboard', element: <IndexPage /> }, // Dashboard as the default page after login
+        { path: '/', element: <Navigate to="/login" replace /> },
         {
-          path: 'dasboard',
+          path: 'dashboard',
           element: (
-            <ProtectedRoute role="admin">
-              <AppView />
+            <ProtectedRoute roles={['ADMIN']}>
+              <IndexPage />
             </ProtectedRoute>
           ),
         },
         {
           path: 'user',
           element: (
-            <ProtectedRoute role="admin">
+            <ProtectedRoute roles={['ADMIN']}>
               <UserPage />
             </ProtectedRoute>
           ),
@@ -53,38 +53,63 @@ export default function Router() {
         {
           path: 'products',
           element: (
-            <ProtectedRoute role="admin">
+            <ProtectedRoute roles={['ADMIN']}>
               <ProductsPage />
             </ProtectedRoute>
           ),
         },
         {
           path: 'blog',
-          element: <BlogView />,
+          element: (
+            <ProtectedRoute roles={['ADMIN', 'DRIVER']}>
+              <BlogView />
+            </ProtectedRoute>
+          ),
         },
         {
-          path: 'Mp',
-          element: <RealTimeLocation />,
+          path: 'mp',
+          element: (
+            <ProtectedRoute roles={['ADMIN', 'DRIVER']}>
+              <RealTimeLocation />
+            </ProtectedRoute>
+          ),
         },
         {
           path: 'employee-management',
-          element: <EmployeeManagement />,
+          element: (
+            <ProtectedRoute roles={['ADMIN', 'EMPLOYEE']}>
+              <EmployeeManagement />
+            </ProtectedRoute>
+          ),
         },
         {
           path: 'vehicle-management',
-          element: <VehicleManagement />,
-        },{
+          element: (
+            <ProtectedRoute roles={['ADMIN', 'DRIVER']}>
+              <VehicleManagement />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'maintenance',
+          element: (
+            <ProtectedRoute roles={['ADMIN', 'DRIVER']}>
+              <Maintenance />
+            </ProtectedRoute>
+          ),
+        },
+        {
           path: 'stock',
-          element: <StockForm />,
+          element: (
+            <ProtectedRoute roles={['ADMIN']}>
+              <StockForm />
+            </ProtectedRoute>
+          ),
         },
         { path: 'register', element: <UserRegistration /> },
-        { path: 'loginn', element: <UserRegistration /> },
+        { path: 'login', element: <LoginView /> },
         { path: 'reg', element: <Register /> },
       ],
-    },
-    {
-      path: 'login',
-      element: <LoginView />, // Ensure this uses LoginView
     },
     {
       path: '404',
@@ -98,3 +123,4 @@ export default function Router() {
 
   return routes;
 }
+

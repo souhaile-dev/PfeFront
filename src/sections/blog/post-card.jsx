@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid';
+
 import { useNavigate } from 'react-router-dom';
 
 

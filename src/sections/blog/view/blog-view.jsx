@@ -3,7 +3,8 @@ import React from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
+import Grid from '@mui/material/Grid';
+
 import Typography from '@mui/material/Typography';
 import Iconify from 'src/components/iconify';
 import PostCard from '../post-card';
@@ -17,11 +18,11 @@ const BlogView = () => {
   const { role } = useAuth();
 
   let filteredPosts = [];
-  if (role === 'admin') {
+  if (role === 'ADMIN') {
     filteredPosts = blogPosts; // Admin sees all posts
-  } else if (role === 'driver') {
+  } else if (role === 'DRIVER') {
     filteredPosts = blogPosts.filter(post => post.title === 'Tracking' || post.title === 'View the stock');
-  } else if (role === 'employee') {
+  } else if (role === 'EMPLOYEE') {
     filteredPosts = blogPosts.filter(post => post.title === 'Ressource humain' || post.title === 'Depences');
   }
 
