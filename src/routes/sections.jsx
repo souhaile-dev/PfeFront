@@ -14,6 +14,10 @@ import ProtectedRoute from '../routes/components/Lo/ProtectedRoute';
 import BlogView from '../sections/blog/view/blog-view';
 import AppView from 'src/pages/app';
 import StockForm from '../sections/blog/view/Stock/StockForm';
+import ArticleForm from '../sections/blog/view/articles/ArticleForm';
+import ReceivingForm from '../sections/blog/view/articles/ReceivingForm';
+import CommandesForm from '../sections/blog/view/articles/CommandesForm';
+import ClientForm from '../sections/blog/view/articles/ClientForm';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const UserPage = lazy(() => import('src/pages/user'));
@@ -95,6 +99,36 @@ export default function Router() {
           element: (
             <ProtectedRoute roles={['ADMIN', 'DRIVER']}>
               <Maintenance />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'ArticleForm',
+          element: (
+            <ProtectedRoute roles={['ADMIN', 'DRIVER']}>
+              <ArticleForm />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: 'ReceivingForm',
+          element: (
+            <ProtectedRoute roles={['ADMIN', 'DRIVER']}>
+              <ReceivingForm />
+            </ProtectedRoute>
+          ),
+        },{
+          path: 'CommandesForm',
+          element: (
+            <ProtectedRoute roles={['ADMIN', 'DRIVER']}>
+              <CommandesForm />
+            </ProtectedRoute>
+          ),
+        },{
+          path: 'ClientForm',
+          element: (
+            <ProtectedRoute roles={['ADMIN', 'DRIVER']}>
+              <ClientForm />
             </ProtectedRoute>
           ),
         },

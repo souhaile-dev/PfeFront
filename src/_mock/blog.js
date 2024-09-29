@@ -21,7 +21,7 @@ export const useBlogPosts = () => {
       title: 'Ressource humain',
       content: 'This is the second blog post content.',
       img: secondPostImage,
-      route: '/employee-management', // Route for EmployeeManagement
+      route: '/user', // Route for EmployeeManagement
     },
     {
       id: 3,
@@ -30,13 +30,14 @@ export const useBlogPosts = () => {
       img: foordPostImage,
       route: '/vehicle-management', // Route for VehicleManagement
     },
+    // {
+    //   id: 4,
+    //   title: 'Depences',
+    //   content: 'This is the fourth blog post content.',
+    //   img: thirdPostImage,
+    //   route: '/depences', // Example route for another component
+    // },
     {
-      id: 4,
-      title: 'Depences',
-      content: 'This is the fourth blog post content.',
-      img: thirdPostImage,
-      route: '/depences', // Example route for another component
-    },{
       id: 5,
       title: 'stock',
       content: 'This is the fourth blog post content.',
@@ -46,8 +47,35 @@ export const useBlogPosts = () => {
       id: 6,
       title: 'Maintenance vehicule',
       content: 'This is the commandes for the logisticien',
-      img: thirdPostImage,
+      img: foordPostImage,
       route: '/Maintenance', // Example route for another component
+    },
+    {
+      id: 7,
+      title: 'Articles',
+      content: 'sticien',
+      img: thirdPostImage,
+      route: '/ArticleForm', // Example route for another component
+    },
+    {
+      id: 8,
+      title: 'RECEVING',
+      content: 'sticien',
+      img: foordPostImage,
+      route: '/ReceivingForm', // Example route for another component
+    },
+    {
+      id: 9,
+      title: 'CommandesForm',
+      content: 'sticien',
+      img: thirdPostImage,
+      route: '/CommandesForm', // Example route for another component
+    },{
+      id: 10,
+      title: 'ClientForm',
+      content: 'sticien',
+      img: foordPostImage,
+      route: '/ClientForm', // Example route for another component
     },
     
   ]);
